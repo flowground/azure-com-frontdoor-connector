@@ -1,0 +1,203 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "routingRuleName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "Reference to another subresource.",
+                    "properties": {
+                        "id": {
+                            "description": "Resource ID.",
+                            "type": "string"
+                        }
+                    },
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "A routing rule represents a specification for traffic to treat and where to send it, along with health probe information.",
+            "properties": {
+                "name": {
+                    "description": "Resource name.",
+                    "type": "string"
+                },
+                "properties": {
+                    "description": "Properties of the Front Door Routing Rule",
+                    "x-ms-client-flatten": true,
+                    "allOf": [
+                        {
+                            "description": "Routing rules to apply to an endpoint",
+                            "properties": {
+                                "acceptedProtocols": {
+                                    "description": "Protocol schemes to match for this rule",
+                                    "items": {
+                                        "description": "Accepted protocol schemes.",
+                                        "enum": [
+                                            "Http",
+                                            "Https"
+                                        ],
+                                        "type": "string",
+                                        "x-ms-enum": {
+                                            "modelAsString": true,
+                                            "name": "FrontDoorProtocol"
+                                        }
+                                    },
+                                    "type": "array"
+                                },
+                                "backendPool": {
+                                    "description": "Reference to another subresource.",
+                                    "properties": {
+                                        "id": {
+                                            "description": "Resource ID.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "x-ms-azure-resource": true,
+                                    "type": "object"
+                                },
+                                "cacheConfiguration": {
+                                    "description": "The caching configuration associated with this rule.",
+                                    "properties": {
+                                        "dynamicCompression": {
+                                            "description": "Whether to use dynamic compression for cached content",
+                                            "enum": [
+                                                "Enabled",
+                                                "Disabled"
+                                            ],
+                                            "type": "string",
+                                            "x-ms-enum": {
+                                                "modelAsString": true,
+                                                "name": "DynamicCompressionEnabled"
+                                            }
+                                        },
+                                        "queryParameterStripDirective": {
+                                            "description": "Treatment of URL query terms when forming the cache key.",
+                                            "enum": [
+                                                "StripNone",
+                                                "StripAll"
+                                            ],
+                                            "type": "string",
+                                            "x-ms-enum": {
+                                                "modelAsString": true,
+                                                "name": "FrontDoorQuery"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "customForwardingPath": {
+                                    "description": "A custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path.",
+                                    "type": "string"
+                                },
+                                "enabledState": {
+                                    "description": "Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'",
+                                    "enum": [
+                                        "Enabled",
+                                        "Disabled"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "FrontDoorEnabledState"
+                                    }
+                                },
+                                "forwardingProtocol": {
+                                    "description": "Protocol this rule will use when forwarding traffic to backends.",
+                                    "enum": [
+                                        "HttpOnly",
+                                        "HttpsOnly",
+                                        "MatchRequest"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "FrontDoorForwardingProtocol"
+                                    }
+                                },
+                                "frontendEndpoints": {
+                                    "description": "Frontend endpoints associated with this rule",
+                                    "items": {
+                                        "description": "Reference to another subresource.",
+                                        "properties": {
+                                            "id": {
+                                                "description": "Resource ID.",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "x-ms-azure-resource": true,
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "patternsToMatch": {
+                                    "description": "The route patterns of the rule.",
+                                    "items": {
+                                        "description": "A route pattern of the rule. Must not have any * except possibly after the final / at the end of the path.",
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "properties": {
+                        "resourceState": {
+                            "description": "Resource status.",
+                            "enum": [
+                                "Creating",
+                                "Enabling",
+                                "Enabled",
+                                "Disabling",
+                                "Disabled",
+                                "Deleting"
+                            ],
+                            "readOnly": true,
+                            "title": "Resource status of the Front Door or Front Door SubResource.",
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "FrontDoorResourceState"
+                            }
+                        }
+                    }
+                },
+                "type": {
+                    "description": "Resource type.",
+                    "readOnly": true,
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,106 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "loadBalancingSettingsName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "Reference to another subresource.",
+                    "properties": {
+                        "id": {
+                            "description": "Resource ID.",
+                            "type": "string"
+                        }
+                    },
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "Load balancing settings for a backend pool",
+            "properties": {
+                "name": {
+                    "description": "Resource name.",
+                    "type": "string"
+                },
+                "properties": {
+                    "description": "Properties of the load balancing settings",
+                    "x-ms-client-flatten": true,
+                    "allOf": [
+                        {
+                            "description": "Round-Robin load balancing settings for a backend pool",
+                            "properties": {
+                                "additionalLatencyMilliseconds": {
+                                    "description": "The additional latency in milliseconds for probes to fall into the lowest latency bucket",
+                                    "type": "integer"
+                                },
+                                "sampleSize": {
+                                    "description": "The number of samples to consider for load balancing decisions",
+                                    "type": "integer"
+                                },
+                                "successfulSamplesRequired": {
+                                    "description": "The number of samples within the sample period that must succeed",
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "properties": {
+                        "resourceState": {
+                            "description": "Resource status.",
+                            "enum": [
+                                "Creating",
+                                "Enabling",
+                                "Enabled",
+                                "Disabling",
+                                "Disabled",
+                                "Deleting"
+                            ],
+                            "readOnly": true,
+                            "title": "Resource status of the Front Door or Front Door SubResource.",
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "FrontDoorResourceState"
+                            }
+                        }
+                    }
+                },
+                "type": {
+                    "description": "Resource type.",
+                    "readOnly": true,
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

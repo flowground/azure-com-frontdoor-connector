@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "routingRuleName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

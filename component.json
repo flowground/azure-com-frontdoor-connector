@@ -1,0 +1,577 @@
+{
+    "title": "FrontDoorManagementClient",
+    "description": "Use these APIs to manage Azure Front Door resources through the Azure Resource Manager. You must make sure that requests made to these resources are secure.",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/azure.com/frontdoor/2018-08-01/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://management.azure.com/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "azure_auth": {
+                "label": "Azure Active Directory OAuth2 Flow",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "auth_uri": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "CheckFrontDoorNameAvailability": {
+            "main": "./lib/actions/CheckFrontDoorNameAvailability.js",
+            "title": "Check the availability of a Front Door resource name.",
+            "description": "Check the availability of a Front Door resource name.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/CheckFrontDoorNameAvailability.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "CheckFrontDoorNameAvailabilityWithSubscription": {
+            "main": "./lib/actions/CheckFrontDoorNameAvailabilityWithSubscription.js",
+            "title": "Check the availability of a Front Door subdomain.",
+            "description": "Check the availability of a Front Door subdomain.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/CheckFrontDoorNameAvailabilityWithSubscription.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontDoors_List": {
+            "main": "./lib/actions/FrontDoors_List.js",
+            "title": "Lists all of the Front Doors within an Azure subscription.",
+            "description": "Lists all of the Front Doors within an Azure subscription.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontDoors_List.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontDoors_ListByResourceGroup": {
+            "main": "./lib/actions/FrontDoors_ListByResourceGroup.js",
+            "title": "Lists all of the Front Doors within a resource group under a subscription.",
+            "description": "Lists all of the Front Doors within a resource group under a subscription.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontDoors_ListByResourceGroup.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontDoors_Delete": {
+            "main": "./lib/actions/FrontDoors_Delete.js",
+            "title": "Deletes an existing Front Door with the specified parameters.",
+            "description": "Deletes an existing Front Door with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontDoors_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontDoors_Get": {
+            "main": "./lib/actions/FrontDoors_Get.js",
+            "title": "Gets a Front Door with the specified Front Door name under the specified subscription and resource group.",
+            "description": "Gets a Front Door with the specified Front Door name under the specified subscription and resource group.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontDoors_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontDoors_CreateOrUpdate": {
+            "main": "./lib/actions/FrontDoors_CreateOrUpdate.js",
+            "title": "Creates a new Front Door with a Front Door name under the specified subscription and resource group.",
+            "description": "Creates a new Front Door with a Front Door name under the specified subscription and resource group.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontDoors_CreateOrUpdate.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "BackendPools_ListByFrontDoor": {
+            "main": "./lib/actions/BackendPools_ListByFrontDoor.js",
+            "title": "Lists all of the Backend Pools within a Front Door.",
+            "description": "Lists all of the Backend Pools within a Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/BackendPools_ListByFrontDoor.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "BackendPools_Delete": {
+            "main": "./lib/actions/BackendPools_Delete.js",
+            "title": "Deletes an existing Backend Pool with the specified parameters.",
+            "description": "Deletes an existing Backend Pool with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/BackendPools_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "BackendPools_Get": {
+            "main": "./lib/actions/BackendPools_Get.js",
+            "title": "Gets a Backend Pool with the specified Pool name within the specified Front Door.",
+            "description": "Gets a Backend Pool with the specified Pool name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/BackendPools_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "BackendPools_CreateOrUpdate": {
+            "main": "./lib/actions/BackendPools_CreateOrUpdate.js",
+            "title": "Creates a new Backend Pool with the specified Pool name within the specified Front Door.",
+            "description": "Creates a new Backend Pool with the specified Pool name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/BackendPools_CreateOrUpdate.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontendEndpoints_ListByFrontDoor": {
+            "main": "./lib/actions/FrontendEndpoints_ListByFrontDoor.js",
+            "title": "Lists all of the frontend endpoints within a Front Door.",
+            "description": "Lists all of the frontend endpoints within a Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontendEndpoints_ListByFrontDoor.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontendEndpoints_Delete": {
+            "main": "./lib/actions/FrontendEndpoints_Delete.js",
+            "title": "Deletes an existing frontend endpoint with the specified parameters.",
+            "description": "Deletes an existing frontend endpoint with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontendEndpoints_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontendEndpoints_Get": {
+            "main": "./lib/actions/FrontendEndpoints_Get.js",
+            "title": "Gets a Frontend endpoint with the specified name within the specified Front Door.",
+            "description": "Gets a Frontend endpoint with the specified name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontendEndpoints_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontendEndpoints_CreateOrUpdate": {
+            "main": "./lib/actions/FrontendEndpoints_CreateOrUpdate.js",
+            "title": "Creates a new frontend endpoint with the specified host name within the specified Front Door.",
+            "description": "Creates a new frontend endpoint with the specified host name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontendEndpoints_CreateOrUpdate.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontendEndpoints_DisableHttps": {
+            "main": "./lib/actions/FrontendEndpoints_DisableHttps.js",
+            "title": "Disables a frontendEndpoint for HTTPS traffic",
+            "description": "Disables a frontendEndpoint for HTTPS traffic",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontendEndpoints_DisableHttps.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontendEndpoints_EnableHttps": {
+            "main": "./lib/actions/FrontendEndpoints_EnableHttps.js",
+            "title": "Enables a frontendEndpoint for HTTPS traffic",
+            "description": "Enables a frontendEndpoint for HTTPS traffic",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontendEndpoints_EnableHttps.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "HealthProbeSettings_ListByFrontDoor": {
+            "main": "./lib/actions/HealthProbeSettings_ListByFrontDoor.js",
+            "title": "Lists all of the HealthProbeSettings within a Front Door.",
+            "description": "Lists all of the HealthProbeSettings within a Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/HealthProbeSettings_ListByFrontDoor.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "HealthProbeSettings_Delete": {
+            "main": "./lib/actions/HealthProbeSettings_Delete.js",
+            "title": "Deletes an existing HealthProbeSettings with the specified parameters.",
+            "description": "Deletes an existing HealthProbeSettings with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/HealthProbeSettings_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "HealthProbeSettings_Get": {
+            "main": "./lib/actions/HealthProbeSettings_Get.js",
+            "title": "Gets a HealthProbeSettings with the specified Rule name within the specified Front Door.",
+            "description": "Gets a HealthProbeSettings with the specified Rule name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/HealthProbeSettings_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "HealthProbeSettings_CreateOrUpdate": {
+            "main": "./lib/actions/HealthProbeSettings_CreateOrUpdate.js",
+            "title": "Creates a new HealthProbeSettings with the specified Rule name within the specified Front Door.",
+            "description": "Creates a new HealthProbeSettings with the specified Rule name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/HealthProbeSettings_CreateOrUpdate.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "LoadBalancingSettings_ListByFrontDoor": {
+            "main": "./lib/actions/LoadBalancingSettings_ListByFrontDoor.js",
+            "title": "Lists all of the LoadBalancingSettings within a Front Door.",
+            "description": "Lists all of the LoadBalancingSettings within a Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/LoadBalancingSettings_ListByFrontDoor.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "LoadBalancingSettings_Delete": {
+            "main": "./lib/actions/LoadBalancingSettings_Delete.js",
+            "title": "Deletes an existing LoadBalancingSettings with the specified parameters.",
+            "description": "Deletes an existing LoadBalancingSettings with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/LoadBalancingSettings_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "LoadBalancingSettings_Get": {
+            "main": "./lib/actions/LoadBalancingSettings_Get.js",
+            "title": "Gets a LoadBalancingSettings with the specified Rule name within the specified Front Door.",
+            "description": "Gets a LoadBalancingSettings with the specified Rule name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/LoadBalancingSettings_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "LoadBalancingSettings_CreateOrUpdate": {
+            "main": "./lib/actions/LoadBalancingSettings_CreateOrUpdate.js",
+            "title": "Creates a new LoadBalancingSettings with the specified Rule name within the specified Front Door.",
+            "description": "Creates a new LoadBalancingSettings with the specified Rule name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/LoadBalancingSettings_CreateOrUpdate.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Endpoints_PurgeContent": {
+            "main": "./lib/actions/Endpoints_PurgeContent.js",
+            "title": "Removes a content from Front Door.",
+            "description": "Removes a content from Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Endpoints_PurgeContent.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RoutingRules_ListByFrontDoor": {
+            "main": "./lib/actions/RoutingRules_ListByFrontDoor.js",
+            "title": "Lists all of the Routing Rules within a Front Door.",
+            "description": "Lists all of the Routing Rules within a Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RoutingRules_ListByFrontDoor.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RoutingRules_Delete": {
+            "main": "./lib/actions/RoutingRules_Delete.js",
+            "title": "Deletes an existing Routing Rule with the specified parameters.",
+            "description": "Deletes an existing Routing Rule with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RoutingRules_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RoutingRules_Get": {
+            "main": "./lib/actions/RoutingRules_Get.js",
+            "title": "Gets a Routing Rule with the specified Rule name within the specified Front Door.",
+            "description": "Gets a Routing Rule with the specified Rule name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RoutingRules_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RoutingRules_CreateOrUpdate": {
+            "main": "./lib/actions/RoutingRules_CreateOrUpdate.js",
+            "title": "Creates a new Routing Rule with the specified Rule name within the specified Front Door.",
+            "description": "Creates a new Routing Rule with the specified Rule name within the specified Front Door.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RoutingRules_CreateOrUpdate.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "FrontDoors_ValidateCustomDomain": {
+            "main": "./lib/actions/FrontDoors_ValidateCustomDomain.js",
+            "title": "Validates the custom domain mapping to ensure it maps to the correct Front Door endpoint in DNS.",
+            "description": "Validates the custom domain mapping to ensure it maps to the correct Front Door endpoint in DNS.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/FrontDoors_ValidateCustomDomain.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

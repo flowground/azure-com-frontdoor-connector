@@ -1,0 +1,174 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "backendPoolName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "Reference to another subresource.",
+                    "properties": {
+                        "id": {
+                            "description": "Resource ID.",
+                            "type": "string"
+                        }
+                    },
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "A backend pool is a collection of backends that can be routed to.",
+            "properties": {
+                "name": {
+                    "description": "Resource name.",
+                    "type": "string"
+                },
+                "properties": {
+                    "description": "Properties of the Front Door Backend Pool",
+                    "x-ms-client-flatten": true,
+                    "allOf": [
+                        {
+                            "description": "A collection of backends that can be routed to.",
+                            "properties": {
+                                "backends": {
+                                    "description": "The set of backends for this pool",
+                                    "items": {
+                                        "description": "Backend address of a frontDoor load balancer.",
+                                        "properties": {
+                                            "address": {
+                                                "description": "Location of the backend (IP address or FQDN)",
+                                                "type": "string"
+                                            },
+                                            "backendHostHeader": {
+                                                "description": "The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host.",
+                                                "type": "string"
+                                            },
+                                            "enabledState": {
+                                                "description": "Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'",
+                                                "enum": [
+                                                    "Enabled",
+                                                    "Disabled"
+                                                ],
+                                                "type": "string",
+                                                "x-ms-enum": {
+                                                    "modelAsString": true,
+                                                    "name": "FrontDoorEnabledState"
+                                                }
+                                            },
+                                            "httpPort": {
+                                                "description": "The HTTP TCP port number. Must be between 1 and 65535.",
+                                                "exclusiveMaximum": false,
+                                                "exclusiveMinimum": false,
+                                                "maximum": 65535,
+                                                "minimum": 1,
+                                                "type": "integer"
+                                            },
+                                            "httpsPort": {
+                                                "description": "The HTTPS TCP port number. Must be between 1 and 65535.",
+                                                "exclusiveMaximum": false,
+                                                "exclusiveMinimum": false,
+                                                "maximum": 65535,
+                                                "minimum": 1,
+                                                "type": "integer"
+                                            },
+                                            "priority": {
+                                                "description": "Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy.",
+                                                "maximum": 5,
+                                                "minimum": 1,
+                                                "type": "integer"
+                                            },
+                                            "weight": {
+                                                "description": "Weight of this endpoint for load balancing purposes.",
+                                                "maximum": 1000,
+                                                "minimum": 1,
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "healthProbeSettings": {
+                                    "description": "Reference to another subresource.",
+                                    "properties": {
+                                        "id": {
+                                            "description": "Resource ID.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "x-ms-azure-resource": true,
+                                    "type": "object"
+                                },
+                                "loadBalancingSettings": {
+                                    "description": "Reference to another subresource.",
+                                    "properties": {
+                                        "id": {
+                                            "description": "Resource ID.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "x-ms-azure-resource": true,
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "properties": {
+                        "resourceState": {
+                            "description": "Resource status.",
+                            "enum": [
+                                "Creating",
+                                "Enabling",
+                                "Enabled",
+                                "Disabling",
+                                "Disabled",
+                                "Deleting"
+                            ],
+                            "readOnly": true,
+                            "title": "Resource status of the Front Door or Front Door SubResource.",
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "FrontDoorResourceState"
+                            }
+                        }
+                    }
+                },
+                "type": {
+                    "description": "Resource type.",
+                    "readOnly": true,
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

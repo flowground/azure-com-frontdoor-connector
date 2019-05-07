@@ -1,0 +1,807 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "Common resource representation.",
+                    "properties": {
+                        "id": {
+                            "description": "Resource ID.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "location": {
+                            "description": "Resource location.",
+                            "type": "string"
+                        },
+                        "name": {
+                            "description": "Resource name.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "tags": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "Resource tags.",
+                            "type": "object"
+                        },
+                        "type": {
+                            "description": "Resource type.",
+                            "readOnly": true,
+                            "type": "string"
+                        }
+                    },
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "Front Door represents a collection of backend endpoints to route traffic to along with rules that specify how traffic is sent there.",
+            "properties": {
+                "properties": {
+                    "description": "Properties of the Front Door Load Balancer",
+                    "x-ms-client-flatten": true,
+                    "allOf": [
+                        {
+                            "description": "The properties needed to update a Front Door",
+                            "properties": {
+                                "backendPools": {
+                                    "description": "Backend pools available to routing rules.",
+                                    "items": {
+                                        "description": "A backend pool",
+                                        "allOf": [
+                                            {
+                                                "description": "Reference to another subresource.",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Resource ID.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "x-ms-azure-resource": true,
+                                                "type": "object"
+                                            }
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "description": "Resource name.",
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "description": "Properties of the Front Door Backend Pool",
+                                                "x-ms-client-flatten": true,
+                                                "allOf": [
+                                                    {
+                                                        "description": "A collection of backends that can be routed to.",
+                                                        "properties": {
+                                                            "backends": {
+                                                                "description": "The set of backends for this pool",
+                                                                "items": {
+                                                                    "description": "Backend address of a frontDoor load balancer.",
+                                                                    "properties": {
+                                                                        "address": {
+                                                                            "description": "Location of the backend (IP address or FQDN)",
+                                                                            "type": "string"
+                                                                        },
+                                                                        "backendHostHeader": {
+                                                                            "description": "The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host.",
+                                                                            "type": "string"
+                                                                        },
+                                                                        "enabledState": {
+                                                                            "description": "Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'",
+                                                                            "enum": [
+                                                                                "Enabled",
+                                                                                "Disabled"
+                                                                            ],
+                                                                            "type": "string",
+                                                                            "x-ms-enum": {
+                                                                                "modelAsString": true,
+                                                                                "name": "FrontDoorEnabledState"
+                                                                            }
+                                                                        },
+                                                                        "httpPort": {
+                                                                            "description": "The HTTP TCP port number. Must be between 1 and 65535.",
+                                                                            "exclusiveMaximum": false,
+                                                                            "exclusiveMinimum": false,
+                                                                            "maximum": 65535,
+                                                                            "minimum": 1,
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "httpsPort": {
+                                                                            "description": "The HTTPS TCP port number. Must be between 1 and 65535.",
+                                                                            "exclusiveMaximum": false,
+                                                                            "exclusiveMinimum": false,
+                                                                            "maximum": 65535,
+                                                                            "minimum": 1,
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "priority": {
+                                                                            "description": "Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy.",
+                                                                            "maximum": 5,
+                                                                            "minimum": 1,
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "weight": {
+                                                                            "description": "Weight of this endpoint for load balancing purposes.",
+                                                                            "maximum": 1000,
+                                                                            "minimum": 1,
+                                                                            "type": "integer"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                },
+                                                                "type": "array"
+                                                            },
+                                                            "healthProbeSettings": {
+                                                                "description": "Reference to another subresource.",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "description": "Resource ID.",
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "x-ms-azure-resource": true,
+                                                                "type": "object"
+                                                            },
+                                                            "loadBalancingSettings": {
+                                                                "description": "Reference to another subresource.",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "description": "Resource ID.",
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "x-ms-azure-resource": true,
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ],
+                                                "properties": {
+                                                    "resourceState": {
+                                                        "description": "Resource status.",
+                                                        "enum": [
+                                                            "Creating",
+                                                            "Enabling",
+                                                            "Enabled",
+                                                            "Disabling",
+                                                            "Disabled",
+                                                            "Deleting"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "title": "Resource status of the Front Door or Front Door SubResource.",
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "FrontDoorResourceState"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "description": "Resource type.",
+                                                "readOnly": true,
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "enabledState": {
+                                    "description": "Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'",
+                                    "enum": [
+                                        "Enabled",
+                                        "Disabled"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "FrontDoorEnabledState"
+                                    }
+                                },
+                                "friendlyName": {
+                                    "description": "A friendly name for the frontDoor",
+                                    "type": "string"
+                                },
+                                "frontendEndpoints": {
+                                    "description": "Frontend endpoints available to routing rules.",
+                                    "items": {
+                                        "description": "A frontend endpoint",
+                                        "allOf": [
+                                            {
+                                                "description": "Reference to another subresource.",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Resource ID.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "x-ms-azure-resource": true,
+                                                "type": "object"
+                                            }
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "description": "Resource name.",
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "description": "Properties of the Frontend endpoint",
+                                                "x-ms-client-flatten": true,
+                                                "allOf": [
+                                                    {
+                                                        "description": "Frontend endpoint used in routing rule",
+                                                        "properties": {
+                                                            "hostName": {
+                                                                "description": "The host name of the frontendEndpoint. Must be a domain name.",
+                                                                "type": "string"
+                                                            },
+                                                            "sessionAffinityEnabledState": {
+                                                                "description": "Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'",
+                                                                "enum": [
+                                                                    "Enabled",
+                                                                    "Disabled"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "SessionAffinityEnabledState"
+                                                                }
+                                                            },
+                                                            "sessionAffinityTtlSeconds": {
+                                                                "description": "UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable.",
+                                                                "type": "integer"
+                                                            },
+                                                            "webApplicationFirewallPolicyLink": {
+                                                                "description": "Defines the Web Application Firewall policy for each host (if applicable)",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "description": "Resource ID.",
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ],
+                                                "properties": {
+                                                    "customHttpsConfiguration": {
+                                                        "description": "The configuration specifying how to enable HTTPS",
+                                                        "readOnly": true,
+                                                        "properties": {
+                                                            "certificateSource": {
+                                                                "description": "Defines the source of the SSL certificate",
+                                                                "enum": [
+                                                                    "AzureKeyVault",
+                                                                    "FrontDoor"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "FrontDoorCertificateSource"
+                                                                }
+                                                            },
+                                                            "frontDoorCertificateSourceParameters": {
+                                                                "description": "Parameters required for enabling SSL with Front Door-managed certificates (if certificateSource=FrontDoor)",
+                                                                "x-ms-client-flatten": true,
+                                                                "properties": {
+                                                                    "certificateType": {
+                                                                        "description": "Defines the type of the certificate used for secure connections to a frontendEndpoint",
+                                                                        "enum": [
+                                                                            "Dedicated"
+                                                                        ],
+                                                                        "type": "string",
+                                                                        "x-ms-enum": {
+                                                                            "modelAsString": true,
+                                                                            "name": "FrontDoorCertificateType"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "keyVaultCertificateSourceParameters": {
+                                                                "description": "KeyVault certificate source parameters (if certificateSource=AzureKeyVault)",
+                                                                "x-ms-client-flatten": true,
+                                                                "properties": {
+                                                                    "secretName": {
+                                                                        "description": "The name of the Key Vault secret representing the full certificate PFX",
+                                                                        "type": "string"
+                                                                    },
+                                                                    "secretVersion": {
+                                                                        "description": "The version of the Key Vault secret representing the full certificate PFX",
+                                                                        "type": "string"
+                                                                    },
+                                                                    "vault": {
+                                                                        "description": "The Key Vault containing the SSL certificate",
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "description": "Resource ID.",
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "protocolType": {
+                                                                "description": "Defines the TLS extension protocol that is used for secure delivery",
+                                                                "enum": [
+                                                                    "ServerNameIndication"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "FrontDoorTlsProtocolType"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "customHttpsProvisioningState": {
+                                                        "description": "Provisioning status of Custom Https of the frontendEndpoint.",
+                                                        "enum": [
+                                                            "Enabling",
+                                                            "Enabled",
+                                                            "Disabling",
+                                                            "Disabled",
+                                                            "Failed"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "CustomHttpsProvisioningState"
+                                                        }
+                                                    },
+                                                    "customHttpsProvisioningSubstate": {
+                                                        "description": "Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step.",
+                                                        "enum": [
+                                                            "SubmittingDomainControlValidationRequest",
+                                                            "PendingDomainControlValidationREquestApproval",
+                                                            "DomainControlValidationRequestApproved",
+                                                            "DomainControlValidationRequestRejected",
+                                                            "DomainControlValidationRequestTimedOut",
+                                                            "IssuingCertificate",
+                                                            "DeployingCertificate",
+                                                            "CertificateDeployed",
+                                                            "DeletingCertificate",
+                                                            "CertificateDeleted"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "CustomHttpsProvisioningSubstate"
+                                                        }
+                                                    },
+                                                    "resourceState": {
+                                                        "description": "Resource status.",
+                                                        "enum": [
+                                                            "Creating",
+                                                            "Enabling",
+                                                            "Enabled",
+                                                            "Disabling",
+                                                            "Disabled",
+                                                            "Deleting"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "title": "Resource status of the Front Door or Front Door SubResource.",
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "FrontDoorResourceState"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "description": "Resource type.",
+                                                "readOnly": true,
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "healthProbeSettings": {
+                                    "description": "Health probe settings associated with this Front Door instance.",
+                                    "items": {
+                                        "description": "A health probe settings",
+                                        "allOf": [
+                                            {
+                                                "description": "Reference to another subresource.",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Resource ID.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "x-ms-azure-resource": true,
+                                                "type": "object"
+                                            }
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "description": "Resource name.",
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "description": "Properties of the health probe settings",
+                                                "x-ms-client-flatten": true,
+                                                "allOf": [
+                                                    {
+                                                        "description": "L7 health probe settings for a backend pool",
+                                                        "properties": {
+                                                            "intervalInSeconds": {
+                                                                "description": "The number of seconds between health probes.",
+                                                                "type": "integer"
+                                                            },
+                                                            "path": {
+                                                                "description": "The path to use for the health probe. Default is /",
+                                                                "type": "string"
+                                                            },
+                                                            "protocol": {
+                                                                "description": "Protocol scheme to use for this probe",
+                                                                "enum": [
+                                                                    "Http",
+                                                                    "Https"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "FrontDoorProtocol"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ],
+                                                "properties": {
+                                                    "resourceState": {
+                                                        "description": "Resource status.",
+                                                        "enum": [
+                                                            "Creating",
+                                                            "Enabling",
+                                                            "Enabled",
+                                                            "Disabling",
+                                                            "Disabled",
+                                                            "Deleting"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "title": "Resource status of the Front Door or Front Door SubResource.",
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "FrontDoorResourceState"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "description": "Resource type.",
+                                                "readOnly": true,
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "loadBalancingSettings": {
+                                    "description": "Load balancing settings associated with this Front Door instance.",
+                                    "items": {
+                                        "description": "A load balancing settings",
+                                        "allOf": [
+                                            {
+                                                "description": "Reference to another subresource.",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Resource ID.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "x-ms-azure-resource": true,
+                                                "type": "object"
+                                            }
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "description": "Resource name.",
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "description": "Properties of the load balancing settings",
+                                                "x-ms-client-flatten": true,
+                                                "allOf": [
+                                                    {
+                                                        "description": "Round-Robin load balancing settings for a backend pool",
+                                                        "properties": {
+                                                            "additionalLatencyMilliseconds": {
+                                                                "description": "The additional latency in milliseconds for probes to fall into the lowest latency bucket",
+                                                                "type": "integer"
+                                                            },
+                                                            "sampleSize": {
+                                                                "description": "The number of samples to consider for load balancing decisions",
+                                                                "type": "integer"
+                                                            },
+                                                            "successfulSamplesRequired": {
+                                                                "description": "The number of samples within the sample period that must succeed",
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ],
+                                                "properties": {
+                                                    "resourceState": {
+                                                        "description": "Resource status.",
+                                                        "enum": [
+                                                            "Creating",
+                                                            "Enabling",
+                                                            "Enabled",
+                                                            "Disabling",
+                                                            "Disabled",
+                                                            "Deleting"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "title": "Resource status of the Front Door or Front Door SubResource.",
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "FrontDoorResourceState"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "description": "Resource type.",
+                                                "readOnly": true,
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "routingRules": {
+                                    "description": "Routing rules associated with this Front Door.",
+                                    "items": {
+                                        "description": "A routing rule",
+                                        "allOf": [
+                                            {
+                                                "description": "Reference to another subresource.",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Resource ID.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "x-ms-azure-resource": true,
+                                                "type": "object"
+                                            }
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "description": "Resource name.",
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "description": "Properties of the Front Door Routing Rule",
+                                                "x-ms-client-flatten": true,
+                                                "allOf": [
+                                                    {
+                                                        "description": "Routing rules to apply to an endpoint",
+                                                        "properties": {
+                                                            "acceptedProtocols": {
+                                                                "description": "Protocol schemes to match for this rule",
+                                                                "items": {
+                                                                    "description": "Accepted protocol schemes.",
+                                                                    "enum": [
+                                                                        "Http",
+                                                                        "Https"
+                                                                    ],
+                                                                    "type": "string",
+                                                                    "x-ms-enum": {
+                                                                        "modelAsString": true,
+                                                                        "name": "FrontDoorProtocol"
+                                                                    }
+                                                                },
+                                                                "type": "array"
+                                                            },
+                                                            "backendPool": {
+                                                                "description": "Reference to another subresource.",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "description": "Resource ID.",
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "x-ms-azure-resource": true,
+                                                                "type": "object"
+                                                            },
+                                                            "cacheConfiguration": {
+                                                                "description": "The caching configuration associated with this rule.",
+                                                                "properties": {
+                                                                    "dynamicCompression": {
+                                                                        "description": "Whether to use dynamic compression for cached content",
+                                                                        "enum": [
+                                                                            "Enabled",
+                                                                            "Disabled"
+                                                                        ],
+                                                                        "type": "string",
+                                                                        "x-ms-enum": {
+                                                                            "modelAsString": true,
+                                                                            "name": "DynamicCompressionEnabled"
+                                                                        }
+                                                                    },
+                                                                    "queryParameterStripDirective": {
+                                                                        "description": "Treatment of URL query terms when forming the cache key.",
+                                                                        "enum": [
+                                                                            "StripNone",
+                                                                            "StripAll"
+                                                                        ],
+                                                                        "type": "string",
+                                                                        "x-ms-enum": {
+                                                                            "modelAsString": true,
+                                                                            "name": "FrontDoorQuery"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "customForwardingPath": {
+                                                                "description": "A custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path.",
+                                                                "type": "string"
+                                                            },
+                                                            "enabledState": {
+                                                                "description": "Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'",
+                                                                "enum": [
+                                                                    "Enabled",
+                                                                    "Disabled"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "FrontDoorEnabledState"
+                                                                }
+                                                            },
+                                                            "forwardingProtocol": {
+                                                                "description": "Protocol this rule will use when forwarding traffic to backends.",
+                                                                "enum": [
+                                                                    "HttpOnly",
+                                                                    "HttpsOnly",
+                                                                    "MatchRequest"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "FrontDoorForwardingProtocol"
+                                                                }
+                                                            },
+                                                            "frontendEndpoints": {
+                                                                "description": "Frontend endpoints associated with this rule",
+                                                                "items": {
+                                                                    "description": "Reference to another subresource.",
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "description": "Resource ID.",
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "x-ms-azure-resource": true,
+                                                                    "type": "object"
+                                                                },
+                                                                "type": "array"
+                                                            },
+                                                            "patternsToMatch": {
+                                                                "description": "The route patterns of the rule.",
+                                                                "items": {
+                                                                    "description": "A route pattern of the rule. Must not have any * except possibly after the final / at the end of the path.",
+                                                                    "type": "string"
+                                                                },
+                                                                "type": "array"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ],
+                                                "properties": {
+                                                    "resourceState": {
+                                                        "description": "Resource status.",
+                                                        "enum": [
+                                                            "Creating",
+                                                            "Enabling",
+                                                            "Enabled",
+                                                            "Disabling",
+                                                            "Disabled",
+                                                            "Deleting"
+                                                        ],
+                                                        "readOnly": true,
+                                                        "title": "Resource status of the Front Door or Front Door SubResource.",
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "FrontDoorResourceState"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "description": "Resource type.",
+                                                "readOnly": true,
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "properties": {
+                        "cname": {
+                            "description": "The host that each frontendEndpoint must CNAME to.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "provisioningState": {
+                            "description": "Provisioning state of the Front Door.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "resourceState": {
+                            "description": "Resource status of the Front Door.",
+                            "enum": [
+                                "Creating",
+                                "Enabling",
+                                "Enabled",
+                                "Disabling",
+                                "Disabled",
+                                "Deleting"
+                            ],
+                            "readOnly": true,
+                            "title": "Resource status of the Front Door or Front Door SubResource.",
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "FrontDoorResourceState"
+                            }
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

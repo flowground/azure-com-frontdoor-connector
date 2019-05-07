@@ -1,0 +1,106 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "frontendEndpointName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+        },
+        "requestBody": {
+            "description": "Https settings for a domain",
+            "properties": {
+                "certificateSource": {
+                    "description": "Defines the source of the SSL certificate",
+                    "enum": [
+                        "AzureKeyVault",
+                        "FrontDoor"
+                    ],
+                    "type": "string",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "FrontDoorCertificateSource"
+                    }
+                },
+                "frontDoorCertificateSourceParameters": {
+                    "description": "Parameters required for enabling SSL with Front Door-managed certificates (if certificateSource=FrontDoor)",
+                    "x-ms-client-flatten": true,
+                    "properties": {
+                        "certificateType": {
+                            "description": "Defines the type of the certificate used for secure connections to a frontendEndpoint",
+                            "enum": [
+                                "Dedicated"
+                            ],
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "FrontDoorCertificateType"
+                            }
+                        }
+                    },
+                    "type": "object"
+                },
+                "keyVaultCertificateSourceParameters": {
+                    "description": "KeyVault certificate source parameters (if certificateSource=AzureKeyVault)",
+                    "x-ms-client-flatten": true,
+                    "properties": {
+                        "secretName": {
+                            "description": "The name of the Key Vault secret representing the full certificate PFX",
+                            "type": "string"
+                        },
+                        "secretVersion": {
+                            "description": "The version of the Key Vault secret representing the full certificate PFX",
+                            "type": "string"
+                        },
+                        "vault": {
+                            "description": "The Key Vault containing the SSL certificate",
+                            "properties": {
+                                "id": {
+                                    "description": "Resource ID.",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "protocolType": {
+                    "description": "Defines the TLS extension protocol that is used for secure delivery",
+                    "enum": [
+                        "ServerNameIndication"
+                    ],
+                    "type": "string",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "FrontDoorTlsProtocolType"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

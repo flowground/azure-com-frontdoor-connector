@@ -1,0 +1,114 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"
+        },
+        "frontDoorName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 64,
+            "pattern": "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"
+        },
+        "healthProbeSettingsName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "Reference to another subresource.",
+                    "properties": {
+                        "id": {
+                            "description": "Resource ID.",
+                            "type": "string"
+                        }
+                    },
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "Load balancing settings for a backend pool",
+            "properties": {
+                "name": {
+                    "description": "Resource name.",
+                    "type": "string"
+                },
+                "properties": {
+                    "description": "Properties of the health probe settings",
+                    "x-ms-client-flatten": true,
+                    "allOf": [
+                        {
+                            "description": "L7 health probe settings for a backend pool",
+                            "properties": {
+                                "intervalInSeconds": {
+                                    "description": "The number of seconds between health probes.",
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "description": "The path to use for the health probe. Default is /",
+                                    "type": "string"
+                                },
+                                "protocol": {
+                                    "description": "Protocol scheme to use for this probe",
+                                    "enum": [
+                                        "Http",
+                                        "Https"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "FrontDoorProtocol"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "properties": {
+                        "resourceState": {
+                            "description": "Resource status.",
+                            "enum": [
+                                "Creating",
+                                "Enabling",
+                                "Enabled",
+                                "Disabling",
+                                "Disabled",
+                                "Deleting"
+                            ],
+                            "readOnly": true,
+                            "title": "Resource status of the Front Door or Front Door SubResource.",
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "FrontDoorResourceState"
+                            }
+                        }
+                    }
+                },
+                "type": {
+                    "description": "Resource type.",
+                    "readOnly": true,
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}
